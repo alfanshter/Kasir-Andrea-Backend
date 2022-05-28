@@ -97,4 +97,16 @@ class ProdukController extends Controller
         ];
         return response()->json($response, Response::HTTP_OK);
     }
+
+    public function search_produk(Request $request)
+    {
+        $nama = $request->input('nama');
+        $data = Produk::where('nama', 'like', "%$nama%")->get();
+        $response = [
+            'message' => 'data sebagai berikut',
+            'status' => 1,
+            'data' => $data
+        ];
+        return response()->json($response, Response::HTTP_OK);
+    }
 }

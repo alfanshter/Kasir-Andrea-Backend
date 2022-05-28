@@ -82,4 +82,62 @@ class AuthController extends Controller
 
         return response()->json($response, Response::HTTP_CREATED);
     }
+
+    //tambah admin
+
+    public function tambah_admin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'foto' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+            'username' => 'required|unique:users',
+            'nama' => ['required'],
+            'password' => ['required'],
+            'alamat' => ['required'],
+            'telepon' => ['required']
+        ]);
+
+        if ($validator->fails()) {
+            $response = [
+                'message' => 'Username sudah terdaftar',
+                'status' => 2,
+                'validator' => $validator->errors()
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        }
+
+        if ($request->password != $request->confirm_password) {
+            $response = [
+                'message' => 'Password harus sama',
+                'status' => 0
+            ];
+
+            return response()->json($response, Response::HTTP_CREATED);
+        }
+        $foto = $request->file('foto')->store('foto-profil', 'public');
+
+        $post = $request->all();
+        $post['foto'] = $foto;
+        $post['role'] = 1;
+        $post['password'] = Hash::make($request->password);
+        $aktekelahiran = User::create($post);
+
+
+        $response = [
+            'message' => 'Akte kelahiran berhasil',
+            'status' => 1,
+        ];
+
+        return response()->json($response, Response::HTTP_CREATED);
+    }
+
+    public function get_admin()
+    {
+        $data = User::where('role', 1)->get();
+        $response = [
+            'message' => 'data sebagai berikut',
+            'status' => 1,
+            'data' => $data
+        ];
+        return response()->json($response, Response::HTTP_OK);
+    }
 }
