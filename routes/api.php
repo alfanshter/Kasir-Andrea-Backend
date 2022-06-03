@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,15 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
 
 //ADMIN
 Route::post('/tambah_admin', [AuthController::class, 'tambah_admin']);
 Route::get('/get_admin', [AuthController::class, 'get_admin']);
-
-
+Route::get('/search_admin/{nama?}', [AuthController::class, 'search_admin']);
 
 //Produk
 Route::post('/produk', [ProdukController::class, 'store']);
 Route::post('/update_produk', [ProdukController::class, 'update_produk']);
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/search_produk/{nama?}', [ProdukController::class, 'search_produk']);
+
+//Keranjang
+Route::post('/tambah_keranjang', [KeranjangController::class, 'tambah_keranjang']);

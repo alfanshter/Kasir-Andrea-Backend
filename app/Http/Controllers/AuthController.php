@@ -83,6 +83,16 @@ class AuthController extends Controller
         return response()->json($response, Response::HTTP_CREATED);
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $response = [
+            'message' => 'logout berhasil',
+            'status' => 1
+        ];
+        return response()->json($response, Response::HTTP_OK);
+    }
+
     //tambah admin
 
     public function tambah_admin(Request $request)
@@ -133,6 +143,18 @@ class AuthController extends Controller
     public function get_admin()
     {
         $data = User::where('role', 1)->get();
+        $response = [
+            'message' => 'data sebagai berikut',
+            'status' => 1,
+            'data' => $data
+        ];
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function search_admin(Request $request)
+    {
+        $nama = $request->input('nama');
+        $data = User::where('role', 1)->where('nama', 'like', "%$nama%")->get();
         $response = [
             'message' => 'data sebagai berikut',
             'status' => 1,
