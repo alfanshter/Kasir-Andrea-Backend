@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,3 +39,11 @@ Route::get('/search_produk/{nama?}', [ProdukController::class, 'search_produk'])
 
 //Keranjang
 Route::post('/tambah_keranjang', [KeranjangController::class, 'tambah_keranjang']);
+Route::post('/kurang_keranjang', [KeranjangController::class, 'kurang_keranjang']);
+Route::post('/hapus_keranjang', [KeranjangController::class, 'hapus_keranjang']);
+Route::get('/total_belanja/{id_user?}', [KeranjangController::class, 'total_belanja']);
+Route::get('/get_keranjang/{id_user?}', [KeranjangController::class, 'get_keranjang']);
+Route::get('/get_keranjang_pesanan/{nomorpesanan?}', [KeranjangController::class, 'get_keranjang_pesanan']);
+
+//Pesanan
+Route::post('/tambah_transaksi', [PesananController::class, 'tambah_transaksi']);

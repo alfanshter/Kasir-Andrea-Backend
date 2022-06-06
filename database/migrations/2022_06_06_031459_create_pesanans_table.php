@@ -13,20 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        //status
-        //0 = belum terbeli 
-        //1 = terjual
-        Schema::create('keranjangs', function (Blueprint $table) {
+        Schema::create('pesanans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_produk');
-            $table->foreign('id_produk')->references('id')->on('produks')->onUpdate('cascade')->onDelete('cascade');
-            $table->bigInteger('harga');
-            $table->integer('jumlah');
             $table->foreignId('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('nomorpesanan')->nullable();
-            $table->integer('is_status')->default(0);
-
+            $table->string('nomorpesanan');
+            $table->string('nama');
+            $table->string('telepon');
+            $table->string('alamat');
+            $table->string('kurir');
+            $table->integer('harga');
+            $table->integer('harga_total');
+            $table->integer('ongkir');
             $table->timestamps();
         });
     }
@@ -38,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('keranjangs');
+        Schema::dropIfExists('pesanans');
     }
 };
