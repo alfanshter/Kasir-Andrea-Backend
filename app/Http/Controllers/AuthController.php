@@ -27,7 +27,7 @@ class AuthController extends Controller
                 'status' => 2,
                 'validator' => $validator->errors()
             ];
-            return response()->json($response, Response::HTTP_OK);
+            return response()->json($response, 200);
         }
 
         if ($request->password != $request->confirm_password) {
@@ -36,7 +36,7 @@ class AuthController extends Controller
                 'status' => 0
             ];
 
-            return response()->json($response, Response::HTTP_CREATED);
+            return response()->json($response, 200);
         }
 
         $aktekelahiran = User::create([
@@ -52,7 +52,7 @@ class AuthController extends Controller
             'status' => 1,
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
     public function login(Request $request)
@@ -65,7 +65,7 @@ class AuthController extends Controller
                 'status' => 0
             ];
 
-            return response()->json($response, Response::HTTP_CREATED);
+            return response()->json($response, 200);
         }
 
         $updatetoken = User::where('username', $request->username)->update(['token_notif' => $request->token_notif]);
@@ -80,7 +80,7 @@ class AuthController extends Controller
         ];
 
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
     public function logout(Request $request)
@@ -90,7 +90,7 @@ class AuthController extends Controller
             'message' => 'logout berhasil',
             'status' => 1
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, 200);
     }
 
     //tambah admin
@@ -112,7 +112,7 @@ class AuthController extends Controller
                 'status' => 2,
                 'validator' => $validator->errors()
             ];
-            return response()->json($response, Response::HTTP_OK);
+            return response()->json($response, 200);
         }
 
         if ($request->password != $request->confirm_password) {
@@ -121,7 +121,7 @@ class AuthController extends Controller
                 'status' => 0
             ];
 
-            return response()->json($response, Response::HTTP_CREATED);
+            return response()->json($response, 200);
         }
         $foto = $request->file('foto')->store('foto-profil', 'public');
 
@@ -137,7 +137,7 @@ class AuthController extends Controller
             'status' => 1,
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
     public function get_admin()
@@ -148,7 +148,7 @@ class AuthController extends Controller
             'status' => 1,
             'data' => $data
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, 200);
     }
 
     public function search_admin(Request $request)
@@ -160,6 +160,6 @@ class AuthController extends Controller
             'status' => 1,
             'data' => $data
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, 200);
     }
 }

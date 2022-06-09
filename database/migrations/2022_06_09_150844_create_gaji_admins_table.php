@@ -13,19 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pesanans', function (Blueprint $table) {
+        Schema::create('gaji_admins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('nomorpesanan');
-            $table->string('nama');
-            $table->string('telepon');
-            $table->string('alamat');
-            $table->string('kurir');
-            $table->integer('harga');
-            $table->integer('harga_total');
-            $table->integer('ongkir');
-            $table->integer('is_status')->default(0);
+            $table->integer('gaji_pokok');
+            $table->integer('jumlah_penjualan');
+            $table->integer('bonus');
+            $table->integer('total_penghasilan');
             $table->timestamps();
         });
     }
@@ -37,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pesanans');
+        Schema::dropIfExists('gaji_admins');
     }
 };

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProdukController extends Controller
@@ -27,7 +30,7 @@ class ProdukController extends Controller
                 'status' => 2,
                 'validator' => $validator->errors()
             ];
-            return response()->json($response, Response::HTTP_OK);
+            return response()->json($response, 200);
         }
         $data = $request->all();
         $foto = $request->file('foto')->store('foto-produk', 'public');
@@ -42,7 +45,7 @@ class ProdukController extends Controller
             'status' => 1
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
     public function update_produk(Request $request)
@@ -61,7 +64,7 @@ class ProdukController extends Controller
                 'status' => 2,
                 'validator' => $validator->errors()
             ];
-            return response()->json($response, Response::HTTP_OK);
+            return response()->json($response, 200);
         }
         $data = [
             'nama' => $request->nama,
@@ -84,9 +87,27 @@ class ProdukController extends Controller
             'status' => 1
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
+    public function detail_produk(Request $request)
+    {
+        $data = Produk::where('id', $request->input('id'))->first();
+        if ($data != null) {
+            $response = [
+                'message' => 'data sebagai berikut',
+                'status' => 1,
+                'data' => $data
+            ];
+        } else {
+            $response = [
+                'message' => 'data kosong',
+                'status' => 0,
+                'data' => $data
+            ];
+        }
+        return response()->json($response, 200);
+    }
     public function index()
     {
         $data = Produk::all();
@@ -95,18 +116,53 @@ class ProdukController extends Controller
             'status' => 1,
             'data' => $data
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, 200);
+    }
+
+    public function hapus_produk(Request $request)
+    {
+        $hapus = Produk::where('id', $request->id)->delete();
+        Storage::disk('public')->delete($request->oldImage);
+        $response = [
+            'message' => 'berhasil hapus',
+            'status' => 1
+        ];
+
+        return response()->json($response, 200);
     }
 
     public function search_produk(Request $request)
     {
-        $nama = $request->input('nama');
-        $data = Produk::where('nama', 'like', "%$nama%")->get();
+        $id = $request->input('id');
+        $data = Produk::where('id', 'like', "%$id%")->get();
         $response = [
             'message' => 'data sebagai berikut',
             'status' => 1,
             'data' => $data
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, 200);
+    }
+
+    public function generate_qrcode(Request $request)
+    {
+
+        $qrcode = base64_encode(QrCode::format('png')->size(260)->errorCorrection('H')->generate($request->id));
+
+        $pdf = Pdf::loadView(
+            'qrcode.qrcode',
+            [
+                'id' => $request->id
+            ],
+            compact('qrcode')
+        )->setPaper([0, 0, 150, 180], 'potrait');
+
+        $content = $pdf->download()->getOriginalContent();
+        Storage::put("public/csv/qrcode/qrcode-$request->id.pdf", $content);
+        $response = [
+            'message' => 'sudah seawater hari ini',
+            'status' => 1,
+            'data' => url('/') . "/storage/csv/qrcode/qrcode-$request->id.pdf"
+        ];
+        return response()->json($response, 200);
     }
 }

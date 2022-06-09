@@ -26,7 +26,7 @@ class KeranjangController extends Controller
                 'status' => 2,
                 'validator' => $validator->errors()
             ];
-            return response()->json($response, Response::HTTP_OK);
+            return response()->json($response, 200);
         }
 
         $cekkeranjang = Keranjang::where('id_produk', $request->id_produk)
@@ -46,7 +46,7 @@ class KeranjangController extends Controller
             'status' => 1
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
     public function get_keranjang(Request $request)
@@ -61,7 +61,7 @@ class KeranjangController extends Controller
             'status' => 1,
             'data' => $data
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, 200);
     }
 
     public function get_keranjang_pesanan(Request $request)
@@ -75,7 +75,7 @@ class KeranjangController extends Controller
             'status' => 1,
             'data' => $data
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, 200);
     }
 
     public function kurang_keranjang(Request $request)
@@ -92,7 +92,7 @@ class KeranjangController extends Controller
                 'status' => 2,
                 'validator' => $validator->errors()
             ];
-            return response()->json($response, Response::HTTP_OK);
+            return response()->json($response, 200);
         }
 
         Keranjang::where('id', $request->id)
@@ -105,7 +105,7 @@ class KeranjangController extends Controller
             'status' => 1
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
     public function hapus_keranjang(Request $request)
@@ -116,7 +116,7 @@ class KeranjangController extends Controller
             'status' => 1
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 
     public function total_belanja(Request $request)
@@ -128,6 +128,6 @@ class KeranjangController extends Controller
             'total_belanja' => (int)$total
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
     }
 }

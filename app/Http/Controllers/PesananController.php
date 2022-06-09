@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Keranjang;
 use App\Models\Pesanan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,7 +34,7 @@ class PesananController extends Controller
                 'status' => 2,
                 'validator' => $validator->errors()
             ];
-            return response()->json($response, Response::HTTP_OK);
+            return response()->json($response, 200);
         }
         $data = $request->all();
         date_default_timezone_set('Asia/Jakarta');
@@ -55,7 +59,79 @@ class PesananController extends Controller
             'data' => $pesanan
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, 200);
+    }
+
+    public function pesanan_selesai(Request $request)
+    {
+        $update = Pesanan::where('id', $request->id)->update([
+            'is_status' => 1
+        ]);
+        $response = [
+            'message' => 'berhasil update',
+            'status' => 1
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    public function get_pesanan_id(Request $request)
+    {
+        $data = Pesanan::where('id_user', $request->input('id_user'))
+            ->get();
+
+        $response = [
+            'message' => 'berhasil diambil',
+            'status' => 1,
+            'data' => $data
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    public function get_pesanan_owner(Request $request)
+    {
+        $data = Pesanan::orderBy('created_at', 'desc')
+            ->get();
+
+
+        $response = [
+            'message' => 'berhasil diambil',
+            'status' => 1,
+            'data' => $data
+        ];
+
+        return response()->json($response, 200);
+    }
+
+
+    public function cetak_nota(Request $request)
+    {
+        $data = Pesanan::where('id', $request->id)
+            ->first();
+
+        $keranjang = Keranjang::where('nomorpesanan', $request->nomorpesanan)
+            ->with('produk')
+            ->get();
+
+        $pdf = Pdf::loadView(
+            'nota.nota',
+            [
+                'nota' => $data,
+                'keranjang' => $keranjang
+            ]
+        )->setPaper('a4', 'potrait');
+
+        $nomorpesanan = $request->nomorpesanan;
+
+        $content = $pdf->download()->getOriginalContent();
+        Storage::put("public/csv/nota/nota-$nomorpesanan.pdf", $content);
+        $response = [
+            'message' => 'sudah seawater hari ini',
+            'status' => 1,
+            'data' => url('/') . "/storage/csv/nota/nota-$nomorpesanan.pdf"
+        ];
+        return response()->json($response, 200);
     }
 
     function RemoveSpecialChar($str)

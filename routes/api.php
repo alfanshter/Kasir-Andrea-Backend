@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GajiController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProdukController;
@@ -34,8 +35,11 @@ Route::get('/search_admin/{nama?}', [AuthController::class, 'search_admin']);
 //Produk
 Route::post('/produk', [ProdukController::class, 'store']);
 Route::post('/update_produk', [ProdukController::class, 'update_produk']);
+Route::post('/hapus_produk', [ProdukController::class, 'hapus_produk']);
+Route::post('/generate_qrcode', [ProdukController::class, 'generate_qrcode']);
 Route::get('/produk', [ProdukController::class, 'index']);
-Route::get('/search_produk/{nama?}', [ProdukController::class, 'search_produk']);
+Route::get('/detail_produk/{id?}', [ProdukController::class, 'detail_produk']);
+Route::get('/search_produk/{id?}', [ProdukController::class, 'search_produk']);
 
 //Keranjang
 Route::post('/tambah_keranjang', [KeranjangController::class, 'tambah_keranjang']);
@@ -47,3 +51,14 @@ Route::get('/get_keranjang_pesanan/{nomorpesanan?}', [KeranjangController::class
 
 //Pesanan
 Route::post('/tambah_transaksi', [PesananController::class, 'tambah_transaksi']);
+Route::post('/pesanan_selesai', [PesananController::class, 'pesanan_selesai']);
+Route::post('/cetak_nota', [PesananController::class, 'cetak_nota']);
+Route::get('/get_pesanan_id', [PesananController::class, 'get_pesanan_id']);
+Route::get('/get_pesanan_owner', [PesananController::class, 'get_pesanan_owner']);
+
+//Gaji
+Route::post('/set_gaji', [GajiController::class, 'set_gaji']);
+Route::post('/bayar_gaji', [GajiController::class, 'bayar_gaji']);
+Route::get('/get_gaji', [GajiController::class, 'get_gaji']);
+Route::get('/gaji_admin/{id_user?}', [GajiController::class, 'gaji_admin']);
+Route::get('/riwayat_gaji_admin/{id_user?}', [GajiController::class, 'riwayat_gaji_admin']);
