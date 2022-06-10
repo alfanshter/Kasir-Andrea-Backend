@@ -20,7 +20,10 @@ class ProdukController extends Controller
             'nama' => ['required'],
             'deskripsi' => ['required'],
             'harga' => ['required'],
-            'stok' => ['required']
+            'stok' => ['required'],
+            'harga_grosir' => ['required'],
+            'jumlah_grosir' => ['required'],
+            'diskon' => ['required']
         ]);
 
 

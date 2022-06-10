@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('nama');
             $table->string('deskripsi');
             $table->integer('harga');
+            $table->integer('harga_grosir')->default(0);
+            $table->integer('jumlah_grosir')->default(0);
+            $table->integer('diskon')->default(0);
             $table->string('stok');
             $table->string('foto');
             $table->timestamps();

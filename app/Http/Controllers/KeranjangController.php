@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Keranjang;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +20,7 @@ class KeranjangController extends Controller
             'id_user' => ['required']
         ]);
 
+        $postdata = $request->all();
 
         if ($validator->fails()) {
             $response = [
@@ -29,16 +31,32 @@ class KeranjangController extends Controller
             return response()->json($response, 200);
         }
 
+        //cek produk 
+        $cekproduk = Produk::where('id', $request->id_produk)->first();
+        $jumlah_grosir = $cekproduk->jumlah_grosir;
+        $harga = $request->harga;
+        if ($request->jumlah >= $jumlah_grosir) {
+            $harga = $cekproduk->harga_grosir;
+        }
+
+        $postdata['harga'] = $harga - $cekproduk->diskon;
+
         $cekkeranjang = Keranjang::where('id_produk', $request->id_produk)
             ->where('id_user', $request->id_user)
             ->where('is_status', 0)
             ->first();
+
         if ($cekkeranjang == null) {
-            Keranjang::create($request->all());
+            Keranjang::create($postdata);
         } else {
+            $jumlah_grosir = $cekkeranjang->jumlah + $request->jumlah;
+            if ($jumlah_grosir >= $cekproduk->jumlah_grosir) {
+                $harga = $cekproduk->harga_grosir - $cekproduk->diskon;
+            }
             Keranjang::where('id_produk', $request->id_produk)
                 ->where('id_user', $request->id_user)->update([
-                    'jumlah' => $cekkeranjang->jumlah + (int)$request->jumlah
+                    'jumlah' => $cekkeranjang->jumlah + (int)$request->jumlah,
+                    'harga' => $harga
                 ]);
         }
         $response = [
@@ -95,9 +113,22 @@ class KeranjangController extends Controller
             return response()->json($response, 200);
         }
 
+        //get produk 
+        $keranjang = Keranjang::where('id', $request->id)
+            ->with('produk')
+            ->first();
+        $harga = $keranjang->produk->harga;
+        $jumlah = $keranjang->jumlah - 1;
+        $jumlah_grosir = $keranjang->produk->jumlah_grosir;
+
+        if ($jumlah >= $jumlah_grosir) {
+            $harga = $keranjang->produk->harga_grosir;
+        }
+
         Keranjang::where('id', $request->id)
             ->update([
-                'jumlah' => (int)$request->jumlah - 1
+                'jumlah' => (int)$request->jumlah - 1,
+                'harga' => $harga - $keranjang->produk->diskon
             ]);
 
         $response = [
