@@ -175,4 +175,15 @@ class AuthController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function profil_admin(Request $request)
+    {
+        $data = User::where('id', $request->input('id'))->first();
+        $response = [
+            'message' => 'data sebagai berikut',
+            'status' => 1,
+            'data' => $data
+        ];
+        return response()->json($response, 200);
+    }
 }

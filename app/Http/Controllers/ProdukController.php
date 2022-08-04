@@ -79,6 +79,10 @@ class ProdukController extends Controller
             'deskripsi' => $request->deskripsi,
             'harga' => $request->harga,
             'stok' => $request->stok,
+            'jumlah_grosir' => $request->jumlah_grosir,
+            'harga_grosir' => $request->harga_grosir,
+            'diskon' => $request->diskon,
+            'modal' => $request->modal
         ];
 
 

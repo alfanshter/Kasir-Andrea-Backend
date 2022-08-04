@@ -33,6 +33,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/tambah_admin', [AuthController::class, 'tambah_admin']);
 Route::get('/get_admin', [AuthController::class, 'get_admin']);
 Route::get('/search_admin/{nama?}', [AuthController::class, 'search_admin']);
+Route::get('/profil_admin/{id?}', [AuthController::class, 'profil_admin']);
 
 //Produk
 Route::post('/produk', [ProdukController::class, 'store']);
