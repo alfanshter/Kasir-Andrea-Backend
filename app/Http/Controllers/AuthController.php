@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -159,6 +160,18 @@ class AuthController extends Controller
             'message' => 'data sebagai berikut',
             'status' => 1,
             'data' => $data
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function delete_admin(Request $request)
+    {
+        $delete = User::where('id', $request->id)->delete();
+        Storage::disk('public')->delete($request->foto);
+        $response = [
+            'message' => 'data sebagai berikut',
+            'status' => 1,
+            'data' => null
         ];
         return response()->json($response, 200);
     }

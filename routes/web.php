@@ -15,5 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [ProdukController::class, 'generate_qrcode']);
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('test', fn () => phpinfo());

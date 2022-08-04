@@ -16,6 +16,7 @@ class KeranjangController extends Controller
         $validator = Validator::make($request->all(), [
             'id_produk' => ['required'],
             'harga' => ['required'],
+            'harga_modal' => ['required'],
             'jumlah' => ['required'],
             'id_user' => ['required']
         ]);
@@ -88,10 +89,14 @@ class KeranjangController extends Controller
             ->with('produk')
             ->with('user')
             ->get();
+
+        $hargamodal = Keranjang::select(DB::raw("SUM(harga_modal*jumlah) as harga_modal"))->where('nomorpesanan', $request->input('nomorpesanan'))->first();
+
         $response = [
             'message' => 'berhasil insert',
             'status' => 1,
-            'data' => $data
+            'data' => $data,
+            'harga_modal' => $hargamodal
         ];
         return response()->json($response, 200);
     }
@@ -153,10 +158,12 @@ class KeranjangController extends Controller
     public function total_belanja(Request $request)
     {
         $total = Keranjang::where('id_user', $request->input('id_user'))->where('is_status', 0)->sum(DB::raw('harga * jumlah'));
+        $modal = Keranjang::where('id_user', $request->input('id_user'))->where('is_status', 0)->sum(DB::raw('harga_modal * jumlah'));
         $response = [
             'message' => 'berhasil insert',
             'status' => 1,
-            'total_belanja' => (int)$total
+            'total_belanja' => (int)$total,
+            'modal' => (int)$modal
         ];
 
         return response()->json($response, 200);

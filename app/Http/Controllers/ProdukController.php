@@ -18,6 +18,7 @@ class ProdukController extends Controller
         $validator = Validator::make($request->all(), [
             'foto' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
             'nama' => ['required'],
+            'modal' => ['required'],
             'deskripsi' => ['required'],
             'harga' => ['required'],
             'stok' => ['required'],
@@ -136,8 +137,8 @@ class ProdukController extends Controller
 
     public function search_produk(Request $request)
     {
-        $id = $request->input('id');
-        $data = Produk::where('id', 'like', "%$id%")->get();
+        $nama = $request->input('nama');
+        $data = Produk::where('nama', 'like', "%$nama%")->get();
         $response = [
             'message' => 'data sebagai berikut',
             'status' => 1,

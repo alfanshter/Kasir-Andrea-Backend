@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('id_produk');
             $table->foreign('id_produk')->references('id')->on('produks')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('harga');
+            $table->bigInteger('harga_modal');
             $table->integer('jumlah');
             $table->foreignId('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

@@ -14,6 +14,11 @@ class Pesanan extends Model
 
     public function keranjang()
     {
-        $this->hasMany(Keranjang::class, 'nomorpesanan', 'nomorpesanan');
+        return $this->hasMany(Keranjang::class, 'nomorpesanan', 'nomorpesanan');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 }

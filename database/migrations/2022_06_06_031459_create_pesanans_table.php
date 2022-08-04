@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('kurir');
             $table->integer('harga');
             $table->integer('harga_total');
+            $table->integer('modal');
             $table->integer('ongkir');
             $table->integer('is_status')->default(0);
             $table->timestamps();

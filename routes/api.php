@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PenghasilanController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/delete_admin', [AuthController::class, 'delete_admin']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 //ADMIN
@@ -62,3 +64,7 @@ Route::post('/bayar_gaji', [GajiController::class, 'bayar_gaji']);
 Route::get('/get_gaji', [GajiController::class, 'get_gaji']);
 Route::get('/gaji_admin/{id_user?}', [GajiController::class, 'gaji_admin']);
 Route::get('/riwayat_gaji_admin/{id_user?}', [GajiController::class, 'riwayat_gaji_admin']);
+
+//Penghasilan
+
+Route::get('/penghasilan_bulanan', [PenghasilanController::class, 'penghasilan_bulanan']);

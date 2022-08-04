@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('harga_grosir')->default(0);
             $table->integer('jumlah_grosir')->default(0);
             $table->integer('diskon')->default(0);
+            $table->integer('modal')->default(0);
             $table->string('stok');
             $table->string('foto');
             $table->timestamps();

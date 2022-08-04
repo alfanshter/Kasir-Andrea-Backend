@@ -114,7 +114,7 @@
                     <table>
                         <tr>
                             <td class="title">
-                                Kasir Online
+                                wdfashion x Andreavokoofficial
                             </td>
 
                             <td>
@@ -139,8 +139,17 @@
 
                             <td>
                                 Pengirim :<br>
-                                Kasir Andrea<br>
-                                Jl. kasir rt/rw 002/001 kel. kasir kec. kasir.
+                                Wdfashion x andreavox<br>
+                                {{$nota->user->nama}} <br>
+                                PERUMAHAN KOTA WISATA CIBUBUR <br>
+                                 Cluster Sanfransisco, Blk. Q1 No.8,
+                                 Ciangsana, <br>
+                                  Kec. Gn. Putri, Kabupaten Bogor, Jawa Barat 16968
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Sertakan video unboxing Tanpa bukti video refund dan retur tidak berlaku
                             </td>
                         </tr>
                     </table>
@@ -203,6 +212,7 @@
                 <td>
                     Harga Pesanan : Rp.  {{$nota->harga}}<br>
                     Ongkos Kirim :Rp.  {{$nota->ongkir}}<br>
+                    Kurir :{{$nota->kurir}}<br>
                    Total:Rp.  {{$nota->harga_total}}
                 </td>
             </tr>

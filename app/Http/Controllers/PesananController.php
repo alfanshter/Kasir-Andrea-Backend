@@ -24,7 +24,8 @@ class PesananController extends Controller
             'kurir' => ['required'],
             'harga_total' => ['required'],
             'harga' => ['required'],
-            'ongkir' => ['required']
+            'ongkir' => ['required'],
+            'modal' => ['required']
         ]);
 
 
@@ -108,7 +109,9 @@ class PesananController extends Controller
     public function cetak_nota(Request $request)
     {
         $data = Pesanan::where('id', $request->id)
+            ->with('user')
             ->first();
+
 
         $keranjang = Keranjang::where('nomorpesanan', $request->nomorpesanan)
             ->with('produk')
