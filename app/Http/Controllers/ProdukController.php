@@ -58,7 +58,11 @@ class ProdukController extends Controller
             'nama' => ['required'],
             'deskripsi' => ['required'],
             'harga' => ['required'],
-            'stok' => ['required']
+            'stok' => ['required'],
+            'jumlah_grosir' => ['required'],
+            'harga_grosir' => ['required'],
+            'diskon' => ['required'],
+            'modal' => ['required']
         ]);
 
 
