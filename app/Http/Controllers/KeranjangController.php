@@ -37,7 +37,9 @@ class KeranjangController extends Controller
         $jumlah_grosir = $cekproduk->jumlah_grosir;
         $harga = $request->harga;
         if ($request->jumlah >= $jumlah_grosir) {
-            $harga = $cekproduk->harga_grosir;
+            if ($jumlah_grosir > 0) {
+                $harga = $cekproduk->harga_grosir;
+            }
         }
 
         $postdata['harga'] = $harga - $cekproduk->diskon;
