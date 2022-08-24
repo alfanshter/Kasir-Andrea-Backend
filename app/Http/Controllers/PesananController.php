@@ -117,13 +117,17 @@ class PesananController extends Controller
             ->with('produk')
             ->get();
 
+
+
+
+        $customPaper = array(0, 0, 226.00, 283.80);
         $pdf = Pdf::loadView(
             'nota.nota',
             [
                 'nota' => $data,
                 'keranjang' => $keranjang
             ]
-        )->setPaper('a4', 'potrait');
+        )->setPaper($customPaper, 'potrait');
 
         $nomorpesanan = $request->nomorpesanan;
 

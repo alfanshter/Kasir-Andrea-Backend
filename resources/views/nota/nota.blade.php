@@ -1,134 +1,120 @@
-
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>INVOICE</title>
 
     <style>
-    .invoice-box {
-        max-width: 800px;
-        margin: auto;
-        padding: 30px;
-        border: 1px solid #eee;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-        font-size: 16px;
-        line-height: 24px;
-        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-        color: #555;
-    }
+        .invoice-box {
+            font-size: 6px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
 
-    .invoice-box table {
-        width: 100%;
-        line-height: inherit;
-        text-align: left;
-    }
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
 
-    .invoice-box table td {
-        padding: 5px;
-        vertical-align: top;
-    }
+        .invoice-box table td {
+            vertical-align: top;
+        }
 
-    .invoice-box table tr td:nth-child(2) {
-        text-align: right;
-    }
+        .invoice-box table tr td:nth-child(2) {
+            text-align: right;
+        }
 
-    .invoice-box table tr.top table td {
-        padding-bottom: 20px;
-    }
-
-    .invoice-box table tr.top table td.title {
-        font-size: 45px;
-        line-height: 45px;
-        color: #333;
-    }
-
-    .invoice-box table tr.information table td {
-        padding-bottom: 40px;
-    }
-
-    .invoice-box table tr.heading td {
-        background: #eee;
-        border-bottom: 1px solid #ddd;
-        font-weight: bold;
-    }
-
-    .invoice-box table tr.details td {
-        padding-bottom: 20px;
-    }
-
-    .invoice-box table tr.item td{
-        border-bottom: 1px solid #eee;
-    }
-
-    .invoice-box table tr.item.last td {
-        border-bottom: none;
-    }
-
-    .invoice-box table tr.total td:nth-child(2) {
-        border-top: 2px solid #eee;
-        font-weight: bold;
-    }
-
-    .text-td {
-           text-align: center;
-            vertical-align: middle
-
-    }
-
-    @media only screen and (max-width: 600px) {
         .invoice-box table tr.top table td {
-            width: 100%;
-            display: block;
-            text-align: center;
+            padding-bottom: 5;
         }
 
-        .invoice-box table tr.information table td {
-            width: 100%;
-            display: block;
-            text-align: center;
+        .invoice-box table tr.top table td.title {
+            font-size: 6px;
+            line-height: 10px;
+            color: #333;
         }
-    }
 
-    /** RTL **/
-    .rtl {
-        direction: rtl;
-        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-    }
+        .invoice-box table tr.information table td {}
 
-    .rtl table {
-        text-align: right;
-    }
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
 
-    .rtl table tr td:nth-child(2) {
-        text-align: left;
-    }
+        .invoice-box table tr.details td {}
+
+        .invoice-box table tr.item td {
+            padding-bottom: 1px;
+        }
+
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+
+        .invoice-box table tr.total td:nth-child(2) {
+            font-weight: bold;
+            padding-bottom: 1px;
+        }
+
+        .text-td {
+            text-align: center;
+            vertical-align: middle
+        }
+
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /** RTL **/
+        .rtl {
+            direction: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
+        .rtl table {
+            text-align: right;
+        }
+
+        .rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
     </style>
 </head>
 
 <body>
     <div class="invoice-box">
+        <center>
+            <p style="font-size:10px;"><b>wdfashion x Andreavokoofficial</b></p>
+
+        </center>
+
         <table cellpadding="0" cellspacing="0">
-            <tr class="top">
-                <td colspan="3">
-                    <table>
-                        <tr>
-                            <td class="title">
-                                wdfashion x Andreavokoofficial
-                            </td>
-
-                            <td>
-                                Invoice #: {{$nota->nomorpesanan}}<br>
-                                Tanggal: {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $nota->created_at)->format('Y-m-d');}}<br>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
             <tr class="information">
                 <td colspan="3">
                     <table>
+                        <tr>
+                            <td>
+                                Pengirim :<br>
+                                Wdfashion x andreavox<br>
+                                {{$nota->user->nama}} <br>
+                                <!-- PERUMAHAN KOTA WISATA CIBUBUR <br>
+                                Cluster Sanfransisco, Blk. Q1 No.8,
+                                Ciangsana, <br>
+                                Kec. Gn. Putri, Kabupaten Bogor, Jawa Barat 16968 -->
+                            </td>
+                        </tr>
                         <tr>
                             <td>
                                 Penerima : <br>
@@ -136,48 +122,20 @@
                                 {{$nota->telepon}}<br>
                                 {{$nota->alamat}}
                             </td>
-
-                            <td>
-                                Pengirim :<br>
-                                Wdfashion x andreavox<br>
-                                {{$nota->user->nama}} <br>
-                                PERUMAHAN KOTA WISATA CIBUBUR <br>
-                                 Cluster Sanfransisco, Blk. Q1 No.8,
-                                 Ciangsana, <br>
-                                  Kec. Gn. Putri, Kabupaten Bogor, Jawa Barat 16968
-                            </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
-                                Sertakan video unboxing Tanpa bukti video refund dan retur tidak berlaku
+                            <td colspan="4">
+                                <center>
+                                    <p style="color: red; ">Sertakan video unboxing Tanpa bukti video refund dan retur tidak berlaku</p>
+                                </center>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-
-            {{--<tr class="heading">
-                <td>
-                    
-                </td>
-
-                <td>
-                    Check #
-                </td>
-            </tr>
-
-            <tr class="details">
-                <td>
-                    Check
-                </td>
-
-                <td>
-                    1000
-                </td>
-            </tr>--}}
-
+            <br>
             <tr class="heading">
-                <td class="text-td" style="width: 33%"> 
+                <td class="text-td" style="width: 33%">
                     Nama Barang
                 </td>
 
@@ -191,7 +149,7 @@
             </tr>
 
             @foreach ($keranjang as $item)
-                <tr class="item">
+            <tr class="item">
                 <td class="text-td">
                     {{$item->produk->nama}}
                 </td>
@@ -202,21 +160,22 @@
                     {{$item->harga}}
                 </td>
             </tr>
-  
+
             @endforeach
 
             <br><br><br>
             <tr class="total">
-                <td> </td>
+                <td></td>
                 <td></td>
                 <td>
-                    Harga Pesanan : Rp.  {{$nota->harga}}<br>
-                    Ongkos Kirim :Rp.  {{$nota->ongkir}}<br>
+                    Harga Pesanan : Rp. {{$nota->harga}}<br>
+                    Ongkos Kirim :Rp. {{$nota->ongkir}}<br>
                     Kurir :{{$nota->kurir}}<br>
-                   Total:Rp.  {{$nota->harga_total}}
+                    Total:Rp. {{$nota->harga_total}}
                 </td>
             </tr>
         </table>
     </div>
 </body>
+
 </html>
