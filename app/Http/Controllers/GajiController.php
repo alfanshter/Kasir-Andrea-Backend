@@ -77,6 +77,7 @@ class GajiController extends Controller
         $bonus = $getgaji->bonus;
         $jumlah_penjualan = Keranjang::where('id_user', $request->input('id_user'))
             ->where('is_status', 1)
+            ->where('is_proses', 1)
             ->whereMonth('created_at', Carbon::now()->month)
             ->sum('jumlah');
 

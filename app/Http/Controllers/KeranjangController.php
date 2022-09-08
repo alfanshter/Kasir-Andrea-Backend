@@ -43,7 +43,7 @@ class KeranjangController extends Controller
         }
 
         $postdata['harga'] = $harga - $cekproduk->diskon;
-
+        $postdata['is_proses'] = 0;
         $cekkeranjang = Keranjang::where('id_produk', $request->id_produk)
             ->where('id_user', $request->id_user)
             ->where('is_status', 0)

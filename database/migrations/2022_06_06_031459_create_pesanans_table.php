@@ -11,6 +11,10 @@ return new class extends Migration
      *
      * @return void
      */
+
+    //  is status = 0 pesanan proses
+    //  is status = 1 pesanan selesai
+    //  is status = 2 pesanan dibatalkan
     public function up()
     {
         Schema::create('pesanans', function (Blueprint $table) {

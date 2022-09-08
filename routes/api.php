@@ -55,6 +55,7 @@ Route::get('/get_keranjang_pesanan/{nomorpesanan?}', [KeranjangController::class
 //Pesanan
 Route::post('/tambah_transaksi', [PesananController::class, 'tambah_transaksi']);
 Route::post('/pesanan_selesai', [PesananController::class, 'pesanan_selesai']);
+Route::post('/pesanan_dibatalkan', [PesananController::class, 'pesanan_dibatalkan']);
 Route::post('/cetak_nota', [PesananController::class, 'cetak_nota']);
 Route::get('/get_pesanan_id', [PesananController::class, 'get_pesanan_id']);
 Route::get('/get_pesanan_owner', [PesananController::class, 'get_pesanan_owner']);

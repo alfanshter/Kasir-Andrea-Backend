@@ -30,7 +30,7 @@
         }
 
         .invoice-box table tr.top table td.title {
-            font-size: 6px;
+            font-size: 8px;
             line-height: 10px;
             color: #333;
         }
@@ -109,10 +109,6 @@
                                 Pengirim :<br>
                                 Wdfashion x andreavox<br>
                                 {{$nota->user->nama}} <br>
-                                <!-- PERUMAHAN KOTA WISATA CIBUBUR <br>
-                                Cluster Sanfransisco, Blk. Q1 No.8,
-                                Ciangsana, <br>
-                                Kec. Gn. Putri, Kabupaten Bogor, Jawa Barat 16968 -->
                             </td>
                         </tr>
                         <tr>

@@ -16,6 +16,11 @@ return new class extends Migration
         //status
         //0 = belum terbeli 
         //1 = terjual
+
+        // proses
+        // 0 = dalam proses
+        // 1 = selesai
+        // 2 = cancel
         Schema::create('keranjangs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_produk');
@@ -27,6 +32,7 @@ return new class extends Migration
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('nomorpesanan')->nullable();
             $table->integer('is_status')->default(0);
+            $table->integer('is_proses')->default(1);
 
             $table->timestamps();
         });
