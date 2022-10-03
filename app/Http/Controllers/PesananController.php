@@ -38,7 +38,6 @@ class PesananController extends Controller
             ];
             return response()->json($response, 200);
         }
-        //coba coba
         //update keranjang
         $cekkerajang = Keranjang::where('id_user', $request->id_user)
             ->where('is_status', 0)->get();
@@ -60,7 +59,8 @@ class PesananController extends Controller
         $hari = date('m-Y h:i:s', time());
         // Given string
 
-        $nomorpesanan = $this->RemoveSpecialChar($hari) . $this->RemoveSpecialChar(strtolower($request->nama)) . $request->id_user;
+        $nomorpesanan =  $request->id_user . time();
+
         $data['nomorpesanan'] = $nomorpesanan;
         //tambah pesanan
         $pesanan = Pesanan::create($data);
@@ -105,7 +105,24 @@ class PesananController extends Controller
 
     public function pesanan_dibatalkan(Request $request)
     {
-        $update = Pesanan::where('id', $request->id)->update([
+        $nomorpesanan = $request->nomorpesanan;
+        $id = $request->id;
+        //update keranjang
+        $cekkerajang = Keranjang::where('nomorpesanan', $nomorpesanan)
+            ->get();
+
+        $data_keranjang = [];
+        foreach ($cekkerajang as $data) {
+            $data_keranjang = $data->jumlah;
+            //cek produk
+            $cek_produk  = Produk::where('id', $data->id_produk)->first();
+            //update stok 
+            $update_stok = Produk::where('id', $data->id_produk)->update([
+                'stok' => (int)$cek_produk->stok + (int)$data->jumlah
+            ]);
+        }
+
+        $update = Pesanan::where('id', $id)->update([
             'is_status' => 2
         ]);
         $response = [
@@ -132,9 +149,46 @@ class PesananController extends Controller
         return response()->json($response, 200);
     }
 
+    public function search_pesanan_id(Request $request)
+    {
+        $nama = $request->input('nama');
+        $data = Pesanan::where('id_user', $request->input('id_user'))
+            ->where('nama', 'like', "%$nama%")
+            ->orderBy('is_status', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $response = [
+            'message' => 'berhasil diambil',
+            'status' => 1,
+            'data' => $data
+        ];
+
+        return response()->json($response, 200);
+    }
+
     public function get_pesanan_owner(Request $request)
     {
-        $data = Pesanan::orderBy('created_at', 'desc')
+        $data = Pesanan::orderBy('is_status', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+
+        $response = [
+            'message' => 'berhasil diambil',
+            'status' => 1,
+            'data' => $data
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    public function search_pesanan_owner(Request $request)
+    {
+        $nama = $request->input('nama');
+        $data = Pesanan::where('nama', 'like', "%$nama%")
+            ->orderBy('is_status', 'asc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
 

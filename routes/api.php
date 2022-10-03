@@ -58,7 +58,9 @@ Route::post('/pesanan_selesai', [PesananController::class, 'pesanan_selesai']);
 Route::post('/pesanan_dibatalkan', [PesananController::class, 'pesanan_dibatalkan']);
 Route::post('/cetak_nota', [PesananController::class, 'cetak_nota']);
 Route::get('/get_pesanan_id', [PesananController::class, 'get_pesanan_id']);
+Route::get('/search_pesanan_id', [PesananController::class, 'search_pesanan_id']);
 Route::get('/get_pesanan_owner', [PesananController::class, 'get_pesanan_owner']);
+Route::get('/search_pesanan_owner', [PesananController::class, 'search_pesanan_owner']);
 
 //Gaji
 Route::post('/set_gaji', [GajiController::class, 'set_gaji']);

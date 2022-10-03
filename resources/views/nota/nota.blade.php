@@ -96,7 +96,9 @@
 <body>
     <div class="invoice-box">
         <center>
-            <p style="font-size:10px;"><b>wdfashion x Andreavokoofficial</b></p>
+            <p style="font-size:10px;"><b>wdfashion x <br>
+                    Andreavokoofficial</b>
+            </p>
 
         </center>
 
@@ -106,17 +108,22 @@
                     <table>
                         <tr>
                             <td>
-                                Pengirim :<br>
-                                Wdfashion x andreavox<br>
-                                {{$nota->user->nama}} <br>
+                                <p style="font-size: 8px;"> Pengirim :<br>
+                                    Wdfashion x <br>
+                                    andreavox<br>
+                                    {{$nota->user->nama}} <br>
+                                </p>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Penerima : <br>
-                                {{$nota->nama}}<br>
-                                {{$nota->telepon}}<br>
-                                {{$nota->alamat}}
+                                <p style="font-size: 8px;">
+                                    Penerima : <br>
+                                    {{$nota->nama}}<br>
+                                    {{$nota->telepon}}<br>
+                                    {{$nota->alamat}}
+
+                                </p>
                             </td>
                         </tr>
                         <tr>
