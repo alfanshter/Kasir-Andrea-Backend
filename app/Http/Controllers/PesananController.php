@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 use Symfony\Component\HttpFoundation\Response;
 
 class PesananController extends Controller
@@ -214,8 +215,6 @@ class PesananController extends Controller
             ->get();
 
 
-
-
         $customPaper = array(0, 0, 226.00, 283.80);
         $pdf = Pdf::loadView(
             'nota.nota',
@@ -235,6 +234,42 @@ class PesananController extends Controller
             'data' => url('/') . "/storage/csv/nota/nota-$nomorpesanan.pdf"
         ];
         return response()->json($response, 200);
+    }
+
+    public function cetak_transaksi(Request $request)
+    {
+        $database = Firebase::database();
+        $data = $database->getReference('Transaksi')->getChild($request->id_transaksi)->getSnapshot()->getValue();
+        $keranjang = $database->getReference('CartOrder')->getChild($request->id_transaksi)->getSnapshot()->getValue();
+        $users = $database->getReference('users')->getChild($data['uid'])->getSnapshot()->getValue();
+        $customPaper = array(0, 0, 226.00, 283.80);
+        $timestamp = $data['timestamp'];
+        $datetimeFormat = 'Y-m-d';
+        $date = new \DateTime();
+        $tanggal =  $date->format($datetimeFormat);
+        $pdf = Pdf::loadView(
+            'nota.notatransaksi',
+            [
+                'nota' => $data,
+                'keranjang' => $keranjang,
+                'users' => $users,
+                'tanggal' => $tanggal
+            ]
+        )->setPaper($customPaper, 'potrait');
+
+        $id_transaksi = $request->id_transaksi;
+
+        $content = $pdf->download()->getOriginalContent();
+        Storage::put("public/csv/nota/nota-$id_transaksi.pdf", $content);
+        $response = [
+            'message' => 'sudah seawater hari ini',
+            'status' => 1,
+            'data' => url('/') . "/storage/csv/nota/nota-$id_transaksi.pdf"
+        ];
+        return response()->json($response, 200);
+
+      
+
     }
 
     function RemoveSpecialChar($str)

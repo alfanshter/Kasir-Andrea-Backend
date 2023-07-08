@@ -72,3 +72,6 @@ Route::get('/riwayat_gaji_admin/{id_user?}', [GajiController::class, 'riwayat_ga
 //Penghasilan
 
 Route::get('/penghasilan_bulanan', [PenghasilanController::class, 'penghasilan_bulanan']);
+
+Route::post('/cetak_transaksi', [PesananController::class, 'cetak_transaksi']);
+
